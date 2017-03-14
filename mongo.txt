@@ -1,0 +1,38 @@
+//1.Create a collection named orders.
+db.createCollection('orders')
+
+//2.Insert at least 3 documents that represent an order. IMPORTANT: See section below for fields.
+db.getCollection('orders').insert({orderDate: new Date('2015-11-28'), orderTotal: 167.98, lineItems: [{unitPrice: 132.99, quantity: 1 , productName:'42in. LED TV'}, {unitPrice: 34.99, quantity: 1, productName: 'HDMI cable'}]})
+db.getCollection('orders').insert({orderDate: new Date('2016-01-31'), orderTotal: 120.00, lineItems: [{unitPrice: 5.00, quantity: 12 , productName:'iPad screen protectors'}, {unitPrice: 10, quantity: 6, productName: 'iPad Case'}]})
+db.getCollection('orders').insert({orderDate: new Date('2016-05-16'), orderTotal: 149.95, lineItems: [{unitPrice: 19.99, quantity: 4 , productName:'pre-owned Wii game'}, {unitPrice: 69.99, quantity: 1, productName: 'Nintendo Wii - used'}]})
+db.getCollection('orders').insert({orderDate: new Date('2016-08-07'), orderTotal: 49.95, lineItems: [{unitPrice: 49.95, quantity: 1 , productName:'BlueRay Player'}]})
+
+//3.Find a single order document, any order document.
+db.getCollection('orders').find({orderTotal: 149.95})
+
+
+//4.Find all orders and make them look pretty.
+db.orders.find({}).pretty()
+
+
+//5. Find all orders with an orderDate that is prior to 1/1/2016.
+db.orders.find({orderDate: {$lt:"2016-01-01"}})
+
+
+//6.Find all orders with an orderDate that is after 1/1/2016.
+
+
+
+//7.Find orders with lineItems that have a quantity that is less than 50, but greater than 5. HINT: Look at $and and dot notation.
+db.getCollection('orders').find({$and: [{"lineItems.quantity": {$lt: 50}}, {"lineItems.quantity": {$gt: 5}}]})
+
+
+//8.Update one of your line items to 42.99. HINT: Look at dot notation
+db.getCollection('orders').update({"lineItems.quantity"}, {$set})
+
+//9.Remove one of your orders.
+db.getCollection('orders').remove({orderDate: "2015-11-28T00:00:00Z"})
+
+db.getCollection('orders').insert({unitPrice: 34.99, quantity: 3, productName: 'HDMI Cable'})
+db.getCollection('orders').insert({unitPrice: 7.99, quantity: 5, productName: 'AVC Adapter'})
+db.getCollection('orders').insert({unitPrice: 132.99, quantity: 4, productName: '48in. LCT TV'})
